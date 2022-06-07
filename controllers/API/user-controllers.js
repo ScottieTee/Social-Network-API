@@ -45,6 +45,19 @@ async updateUser({ params, body }, res) {
 
     res.json(userData);
   },
+
+  async addFriend({ params }, res) {
+      const friendData = await User.findOne({ _id: params.friendId });
+      const userData = await User.findOneAndUpdate(
+          { _id: params.userId},
+          { $push: {friends: friendData._id }
+        },
+        { new: true }
+      ).populate("friends");
+      res.json(userData);
+  },
+
+  
 };
 
 module.exports = userControllers;
