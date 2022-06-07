@@ -21,14 +21,15 @@ const UserSchema = new Schema({
       lowercase: true,
       //must match a valid email address - check mongoose matching validation
     },
-    thoughts: [],
+    thoughts: [
+      { 
+        type: Schema.Types.ObjectId,
+        ref: "Thought"
+      }
+    ],
     friends: []
   });
-  
-//String
-//Unique
-//Required
-//Trimmed
+
 
 // create the username model using the usernameSchema
 const User = model('User', UserSchema);

@@ -19,7 +19,7 @@ async newUser({ body }, res) {
 }, 
 
 async getUserById({ params }, res) {
-    const userData = await User.findOne({ _id:params.id }).select("-_v");
+    const userData = await User.findOne({ _id:params.id }).populate('thoughts').select("-_v");
     if(!userData) {
         res.json({message: "User not found."});
     }
