@@ -1,15 +1,24 @@
-const Thought = require('../../models');
+const { Thought, User } = require('../../models');
 
 const thoughtControllers = {
     async totalThoughts(req, res) {
-        const thoughts = await Thought.find({});
+        try {
+            const thoughts = await Thought.find({});
+        if (!thoughts.length){
+            res.json({ message: 'Could not find any thoughts!'});
+            return;
+        }
         res.json(thoughts);
-    }, 
+    } catch (error) {
+        res.json(error);
+    }
+},
 
-async newThought({ body }, res) {
+async newThought({ params, body }, res) {
+    try {
     const newThought = await Thought.create(body);
     const userData = await User.findOneAndUpdate(
-        { _id: params.userId}, 
+        { _id: params.userId }, 
         { $push: {thoughts: newTHought._id } }, 
         { new: true }
         );
@@ -18,20 +27,46 @@ async newThought({ body }, res) {
         await newThought.save();
 
     res.send(newThought);
-}, 
+} catch(error) {
+    res.json(error);
+}
+},
 
 async getThoughtById({ params }, res) {
+    try{
     const thoughtData = await Thought.findOne({ 
-        _id:params.thoughtId }).populate("user", "username");
-    res.send(thoughtData);
-}, 
+        _id:params.thoughtId, }).populate("user");
+    res.json(thoughtData);
+} catch(error) {
+    res.json(error);
+}
+},
+
 async addReaction({ params, body }, res) {
+    try {
     const thoughtData = await Thought.findOneAndUpdate(
         { _id:params.thoughtId },
-        { $pull: {reactions: {reactionId: params.reactionId} } }
-    ).populate("reactions");thoughtData.save();
-    res.JSON(thoughtData);
+        { $push: {reactions: body } }
+    ).populate("reactions");
+    thoughtData.save();
+    res.json(thoughtData);
+} catch(error) {
+    res.json(error);
+}
 },
+
+async deleteReaction({ params }, res) {
+    try {
+        const thoughtData = awaitthought.findOneAndUpdate(
+            { _id:params.thoughtId },
+            { $pull: { reactions: { _id: params.reactionId } } }
+        ).populate("reactions");
+        await thoughtData.save();
+        res.json(thoughtData); 
+       } catch (error)  {
+         res.json(error);
+       } 
+    },    
 };
 
 module.exports = thoughtControllers;
