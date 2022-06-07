@@ -1,4 +1,34 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
+const moment= require("moment");
+
+const ReactionSchema = new Schema({
+    reactionId: { 
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+    },
+    reactionText: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdAtVal) => moment(createdAtVal).calendar(),
+    },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  }
+);
 
 const ThoughtSchema = new Schema({
     thoughtText: { 
@@ -10,13 +40,21 @@ const ThoughtSchema = new Schema({
     createdAt: { 
         type: Date, 
         default: Date.now,
+        get: (createdAtVal) => moment(createdAtVal).calendar(),
     },
     user: { 
-        //i think this should actually be a string per assignment instructions but trying to make it work with the user.js
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-});
+    reactions:[ReactionSchema],
+},
+    { 
+     toJSON: { 
+     getters: true, 
+        },
+        id: false,
+    }
+);
 
 const Thought = model("Thought", ThoughtSchema);
 
