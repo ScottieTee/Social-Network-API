@@ -2,7 +2,7 @@ const res = require('express/lib/response');
 const User = require('../../models');
 
 const userControllers = {
-    async allUsers(req, res) {
+    async totalUsers(req, res) {
         const users = await User.find({});
         if(!users.length) {
             res.json({message: "No users found."})
