@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose');
 
 //email validation
 const checkEmail = function (email) {
-    const re = //replace with email regex;
+    //will test the below regex pattern, i dont think it should be in a string
+    const re = '^[A-Za-z0-9+_.-]+@(.+)$'
     return re.test(email);
 };
 
