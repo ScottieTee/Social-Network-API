@@ -5,10 +5,10 @@ router.route("/")
 .get(totalThoughts)
 
 
-router.route(":/thoughtid")
+router.route("/:thoughtId")
 .get(getThoughtById)
 
-router.route(":/userId")
+router.route("/:userId")
 .post(newThought)
 
 router.route("/:thoughtId/reactions")

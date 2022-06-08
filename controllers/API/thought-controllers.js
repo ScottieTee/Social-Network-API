@@ -4,14 +4,14 @@ const thoughtControllers = {
     async totalThoughts(req, res) {
         try {
             const thoughts = await Thought.find({});
-        if (!thoughts.length){
-            res.json({ message: 'Could not find any thoughts!'});
-            return;
+            if (!thoughts.length){
+                res.json({ message: 'Could not find any thoughts!'});
+                return;
+            }
+            res.json(thoughts);
+        } catch (error) {
+            res.json(error);
         }
-        res.json(thoughts);
-    } catch (error) {
-        res.json(error);
-    }
 },
 
 async newThought({ params, body }, res) {
