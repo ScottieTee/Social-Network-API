@@ -4,7 +4,6 @@ const {totalThoughts, newThought, getThoughtById, addReaction} = require("../../
 router.route("/")
 .get(totalThoughts)
 
-
 router.route("/:thoughtId")
 .get(getThoughtById)
 
