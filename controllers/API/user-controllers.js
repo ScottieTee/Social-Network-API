@@ -1,5 +1,4 @@
-const res = require('express/lib/response');
-const User = require('../../models');
+const { User } = require('../../models');
 
   const userControllers = {
     async totalUsers(req, res) {
@@ -16,16 +15,19 @@ const User = require('../../models');
     },
 
     async newUser({ body }, res) {
-      try {
-        const newUser = await User.create(body);
-        if (!newUser) {
-          res.status(503).json({ message: "User not created." });
-        }
-        res.json(newUser);
-      } catch (error) {
-        res.json(error);
-      }
-    },
+      console.log("body =", body);
+       try {
+         const newUser = await User.create(body);
+         console.log("newUser = ", newUser)
+         if (!newUser) {
+           res.status(503).json({ message: "User not created." });
+         }
+         res.json(newUser);
+       } catch (error) {
+         console.log(error);
+         res.json(error);
+       }
+     },
 
     async getUserById({ params }, res) {
       try {

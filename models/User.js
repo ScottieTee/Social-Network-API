@@ -12,7 +12,7 @@ const UserSchema = new Schema({
       type: String, 
       required: true,
       unique: true,
-      trim: true,
+      trim: true
     },
     email: {
       type: String,
@@ -31,18 +31,18 @@ const UserSchema = new Schema({
       { 
         type: Schema.Types.ObjectId,
         ref: "User"
-      },
-    ],
+      }
+    ]
   },
   { 
     toJSON: {
       virtuals: true,
     },
-    id: false,
+    id: false
   }
   );
 
-  UserSchema.post("findOneAndDelete", async function (thought){
+  /*UserSchema.post("findOneAndDelete", async function (thought){
     console.log("This is a thought" + thought)
     if (thought) {
       const data = await Thought.deleteMany({_id: { $in: [thought.thoughts] } });
@@ -56,7 +56,7 @@ const UserSchema = new Schema({
     } else {
       return 0;
     }  
-  });
+  });*/
 
 // create the username model using the usernameSchema
 const User = model('User', UserSchema);
