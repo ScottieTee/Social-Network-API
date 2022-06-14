@@ -58,7 +58,7 @@ async addReaction({ params, body }, res) {
 
 async deleteReaction({ params }, res) {
     try {
-        const thoughtData = awaitthought.findOneAndUpdate(
+        const thoughtData = await Thought.findOneAndUpdate(
             { _id:params.thoughtId },
             { $pull: { reactions: { _id: params.reactionId } } }
         ).populate("reactions");
