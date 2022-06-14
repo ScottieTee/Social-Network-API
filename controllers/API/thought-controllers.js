@@ -35,7 +35,8 @@ async newThought({ params, body }, res) {
 async getThoughtById({ params }, res) {
     try{
     const thoughtData = await Thought.findOne({ 
-        _id:params.thoughtId, }).populate("user");
+        _id: params.thoughtId, 
+    }).populate("user");
     res.json(thoughtData);
 } catch(error) {
     res.json(error);
